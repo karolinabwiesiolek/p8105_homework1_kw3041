@@ -4,4 +4,104 @@ output: github_document
 date: "2025-09-20"
 ---
 
+Here, I will run a code to display the first 6 rows of the dataset in order to access the data. 
 
+```{r}
+library(moderndive)
+library(ggplot2)
+library(tidyverse)
+data("early_january_weather")
+head(early_january_weather)
+```
+
+## Short description of this data set! 
+
+This data includes variables such as `temp`, which is measured in Fahrenheit, and `dewp`, which is a measure of dewpoint; `humid` for relative humidity; `wind_speed`, and a few more variables. 
+
+## Checking the structure of early_january_weather tibble:
+
+The early_january_weather dataset contains following number of rows:
+```{r}
+nrow(early_january_weather)
+```
+
+The early_january_weather dataset contains the following numner of columns:
+```{r}
+ncol(early_january_weather)
+```
+
+The mean temperature of this dataset is:
+```{r}
+mean(early_january_weather[["temp"]], na.rm = TRUE)
+```
+
+
+
+## Plot of the Weather
+
+```{r}
+weather_plot <- ggplot2::ggplot(
+  early_january_weather,
+  ggplot2::aes(x = time_hour, y = temp, color = humid)
+) +
+  ggplot2::geom_point(alpha = 0.5) + 
+  ggplot2::labs(
+    title = "Temperature over Time; Colored by Humidity",
+    x = "Time (hour)",
+    y = "Temperature (F)",
+    color = "Humidity"
+  ) + 
+    ggplot2::theme_minimal()
+
+weather_plot
+```
+```{r}
+ggplot2::ggsave("scatterplot_weather12.png", plot = weather_plot, width = 7, height = 4)
+```
+
+## Problem 2. Here, first I will set a random numeric sample. 
+
+```{r}
+set.seed(123) 
+numeric_vec = rnorm(10)
+```
+
+```{r}
+logical_vec = numeric_vec > 0
+```
+
+```{r}
+char_vec = letters[1:10]
+```
+
+```{r}
+factor_vec = factor(sample(c("Low", "Medium", "High"), size = 10, replace = TRUE ))
+```
+
+
+```{r}
+df = data.frame(
+  numeric_var = numeric_vec,
+  logical_var = logical_vec,
+  char_var = char_vec,
+  factor_var = factor_vec
+)
+
+df
+```
+
+Taking mean from each variable
+
+#Numeric and logical mean
+
+```{r}
+mean(df[ , "numeric_var"])
+mean(df[, "logical_var"])
+```
+
+```{r}
+mean(df[ , "char_var"])
+mean(df[ , "factor_var"])
+```
+
+Only numeric and logical variables can be avergaed directly, if we wanted to get the avergae of facotrs and characters we would first need to convert or assign them a numeric conversion.
